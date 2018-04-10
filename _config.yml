@@ -31,22 +31,22 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: Haimeng Zhou Blogs
-subtitle: A web developer's blogs
-description: >- # this means to ignore newlines until "baseurl:"
+subtitle: I am a web application developer
+description: I will be talking about Ruby on Rails, React, GraphQL and all other web developing related tech.
 author: Haimeng Zhou
 email: chou.amen@gmail.com
 avatar: assets/images/avatar.jpg
 
 # You'll want to customize url and baseurl for your own site:
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site
+url: "https://amenzhou.github.com" # the base hostname & protocol for your site
 
 # Social settings
 facebook_url:
-github_url:
+github_url: https://github.com/amenzhou
 googleplus_url:
 instagram_url:
-linkedin_url:
+linkedin_url: https://www.linkedin.com/in/haimeng-zhou-b0840492/
 pinterest_url:
 slack_url:
 twitter_url:
