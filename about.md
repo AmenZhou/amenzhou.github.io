@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-I am a web application developer. From my day to day work, I am doing business with Ruby, Rails, Js, React, Elixir etc.
+I am a web application developer at [Teladoc](https://www.teladoc.com). From my day to day work, I am doing business with Ruby, Rails, Js, React, Elixir etc.
 
 Here is the place to record my little pieces of thoughts from my daily life and share with others.
 
