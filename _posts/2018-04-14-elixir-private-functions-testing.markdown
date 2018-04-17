@@ -6,9 +6,11 @@ categories: elixir
 tags: [test]
 ---
 
-In this post, I am not going to talk how many approaches we can use to test private functions, I am going to give an example and my solution.
+In this post, I am not going to talk how many approaches we can use to test private functions, alternatively, I am going to go through an example and show my solution step by step.
 
-Basically saying that we shouldn't test private function **directly**. That increase the complexity for writting tests, but that is not the bad thing. Most of the time, when we find ourselves are struggling on how to test a private function, it means that the opportunity to optimize our code is coming.
+As we all known that we shouldn't test private function **explicitly**, but that doesn't mean that we can ignore testing private functions and assume that they are working well as far as their caller - public functions are good. We still need tests to cover the private functions fully.
+
+Most of the time, when we find ourselves struggling on how to test a private function, the opportunity of code optimization is coming.
 
 ## Here is an example!
 
@@ -41,7 +43,7 @@ We can easily test the behavior of `generate_employee_id` by this
 
 ## Increase complexity of this example!
 
-In order to make the `employee_id` unique, we add more logic
+The `employee_id` should be unique, we add more code to enhance this feature
 
 ```elixir
   defmodule Employee do
@@ -58,10 +60,12 @@ In order to make the `employee_id` unique, we add more logic
       "#{first_name}_#{last_name}_#{suffix}"
     end
 
+    # We add suffix to the employee_id in order to make the id unique
     defp generate_employee_id(%{first_name: first_name, last_name: last_name} = params, n \\ 1)
       suffix = Enum.random(0..999) |> Integer.to_string
       employee_id = "#{first_name}_#{last_name}_#{suffix}"
 
+      # If the generated id is not unique then it goes over from the top
       !(employee_id |> is_unique_employee_id) ?
         params |> generate_employee_id(n + 1) : employee_id
     end
@@ -81,7 +85,8 @@ Something I want to test upon to the above code, I want to make sure that
 * The recurring function can be executed no more than 3 times
 * The employee_id format is corret
 
-**It is impossible to test the first 2 points so I am going to do some surgeries.**
+I am going to do some surgeries on the code.
+
 ### Firstly, move those 3 employee_id generating functions to a separate file
 
 Those 3 `employee_id` correlated functions can be decoupled from `Employee` module. I create a new module.
@@ -148,13 +153,27 @@ That is not enough, I am not able to test the recurring function.
   end
 ```
 
-Yey! The `suffix` can be overwritten by test code.
+Now the `suffix` is expectable, I want to use `suffix` to analysis the behavior of recurring function `generate_employee_id/2`.
 
 ### Lastly, we put them together.
 
-In the `Employee` test file
+I create a `EmployeeIdGeneratorTest` module
 
 ```elixir
+  test "calls generate_employee_id once when there is no duplicated id" do
+    assert EmployeeIdGenerator.generate_employee_id(%{first_name: "Haimeng", last_name: "Zhou"}) == "Haimeng_Zhou_1"
+  end
+
+  test "calls generate_employee_id twice when there is a duplicated id in the system"  do
+    # Create an employee first
+    # Employee.create_changeset(%Employee{}, %{...})
+    assert EmployeeIdGenerator.generate_employee_id(%{first_name: "Haimeng", last_name: "Zhou"}) == "Haimeng_Zhou_2"
+  end
+
+  test "calls generate_employee_id 4 times when it cannot find unique id constantly" do
+    # Create 4 employees first
+    assert EmployeeIdGenerator.generate_employee_id(%{first_name: "Haimeng", last_name: "Zhou"}) == "Haimeng_Zhou_4"
+  end
 ```
 
 
