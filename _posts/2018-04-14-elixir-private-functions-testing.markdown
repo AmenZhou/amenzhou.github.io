@@ -31,7 +31,7 @@ Let's say there is an `Employee` module, it has an attribute called `employee_id
   end
 ```
 
-We can easily test the behavior of `generate_employee_id` by this
+I can easily test the behavior of `generate_employee_id` by this
 
 ```elixir
   test "creates an employee changeset with a correct employee_id" do
@@ -43,7 +43,7 @@ We can easily test the behavior of `generate_employee_id` by this
 
 ## Increase complexity of this example!
 
-The `employee_id` should be unique, we add more code to enhance this feature
+The `employee_id` should be unique, I add more code to enhance this feature
 
 ```elixir
   defmodule Employee do
@@ -60,7 +60,7 @@ The `employee_id` should be unique, we add more code to enhance this feature
       "#{first_name}_#{last_name}_#{suffix}"
     end
 
-    # We add suffix to the employee_id in order to make the id unique
+    # I add suffix to the employee_id in order to make the id unique
     defp generate_employee_id(%{first_name: first_name, last_name: last_name} = params, n \\ 1)
       suffix = Enum.random(0..999) |> Integer.to_string
       employee_id = "#{first_name}_#{last_name}_#{suffix}"
@@ -155,7 +155,7 @@ That is not enough, I am not able to test the recurring function.
 
 Now the `suffix` is expectable, I want to use `suffix` to analysis the behavior of recurring function `generate_employee_id/2`.
 
-### Lastly, we put them together.
+### Lastly, I put them together.
 
 I create a `EmployeeIdGeneratorTest` module
 
@@ -176,6 +176,6 @@ I create a `EmployeeIdGeneratorTest` module
   end
 ```
 
+You can see that the behavior of the recurring function is predictable by checking its returned value. And at the same time, the other function `is_unique_employee_id` is also covered by the tests.
 
-
-
+`suffix` was hacked so I am not able to test it, but the risk is very low in terms of its complexity.
