@@ -6,7 +6,7 @@ categories: elixir
 tags: [test]
 ---
 
-In this post, I am not going to talk how many approaches we can use to test private functions, alternatively, I am going to go through an example and show my solution step by step.
+In this post, I am not going to talk how many approaches we can use to test private function behavior, alternatively, I am going to go through an example and show my solution step by step.
 
 As we all known that we shouldn't test private function **explicitly**, but that doesn't mean that we can ignore testing private functions and assume that they are working well as far as their caller - public functions are good. We still need tests to cover the private functions fully.
 
