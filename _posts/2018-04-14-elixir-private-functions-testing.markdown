@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "How to Test Private Functions in Elixir?"
+title:  "A Show Case of Elixir Unit Test Strategy"
 date:   2018-04-14 15:10:00 -0500
 categories: elixir
 tags: [test]
