@@ -80,6 +80,57 @@ class Form extends React {
 
 ### 2. Making Http Api calls inside Yup schema is not recommended
 
+When you use Yup for form validation in Formik, you need to define a Yup schema and call the schema in the `validationSchema` function. There is a validation schema example on [this page](https://jaredpalmer.com/formik/docs/guides/validation)
+
+This is a Yup schema
+
+```javascript
+const SignupSchema = Yup.object().shape({
+  firstName: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
+  lastName: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
+  email: Yup.string()
+    .email('Invalid email')
+    .required('Required'),
+});
+```
+
+The validation function will be triggered on an input change event / a blur event / a form submit event, based on your configuration. Everytime the validation function is called, it will execute validation on all fields on the form. That means even you only change first name, it will run validation on last name and email as well.
+
+Think about this
+
+```javascript
+const SignupSchema = Yup.object().shape({
+  firstName: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
+  lastName: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
+  email: Yup.string()
+    .checkDuplicatedEmail() // a customized validation function which makes api call from it
+    .email('Invalid email')
+    .required('Required'),
+});
+
+// See the Yup.addMethod doc at https://github.com/jquense/yup#yupaddmethodschematype-schema-name-string-method--schema-void
+yup.addMethod(yup.string, 'checkDuplicatedEmail', => {
+  return Yup.string().test('checkDuplicatedEmail', 'The email address has been taken', email => {
+    // make an api call to the server
+  });
+});
+```
+
+The api call will be fired while user is typing by key strokes. Consider to cache the api call or separate the email validation from this schema.
+
+
 ### 3. Don't use self-controlled input components inside Formik
 
 ### 4. How to write tests?
