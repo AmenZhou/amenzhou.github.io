@@ -121,6 +121,4 @@ Looks better? But I want to move one step further. I am going to add some spices
   }
 ```
 
-I pushed it to a little extreme in order to show case the idea.
-
-I added curly brace pairs to wrap `case` blocks so that the destructing constants are all in their own closures.
+**As you can see, I added curly brace pairs to wrap each `case` blocks so that the destructing constants are all in their own closures. Even the destructed consts are having same names in each block, but they only affect inside their own blocks **

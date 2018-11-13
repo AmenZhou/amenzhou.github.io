@@ -41,7 +41,7 @@ Here is the [reference link of the solution](https://github.com/jaredpalmer/form
 
 // formik-container.js
 
-class FormikContainer extends React {
+class FormikContainer extends Component {
   render() {
     return (
       <Formik
@@ -56,7 +56,7 @@ class FormikContainer extends React {
 
 // form.js
 
-class Form extends React {
+class Form extends Component {
   componentDidUpdate(prevProps) {
     // Here is the scroll up function
     if (prevProps.isSubmitting && !this.props.isSubmitting && !isEmpty(this.errors)) {
@@ -130,7 +130,61 @@ yup.addMethod(yup.string, 'checkDuplicatedEmail', => {
 
 The api call will be fired while user is typing by key strokes. Consider to cache the api call or separate the email validation from this schema.
 
-
 ### 3. Don't use self-controlled input components inside Formik
+
+Think about this case
+
+I have a self-controlled component
+
+```js
+// This component isself-controlled since it has its own state
+  class FirstNameInput extends Component {
+    constructor(props){
+      ...
+      this.state = { value: this.props.value };
+    }
+
+    onChange = (e) =>
+      this.setState({ value: e.target.value })
+
+    render() {
+      return
+      <div>
+        <label>First Name</label>
+        <input type="text" name="firstName" value={this.state.value} onChange={this.onChange} />
+      </div>
+    }
+  }
+
+// Formik has a state called values, which controls all values of its children inputs
+  class FormikContainer extends Component {
+    render() {
+      copyFirstName = (e, setFieldValue) => {
+        // set firstName by a default value
+      }
+
+      return (
+        <Formik
+          validation={...}
+          renders={props => (
+            <FirstNameInput value={props.values.firstName} />
+            <LastNameInput />
+            <input type="checkbox" name="copyFirstName" onChange={e => { this.copyFirstName(e, props.setFieldValue) }}>Use the same first name above</input>
+            <button>Submit</button>
+          )}
+        />
+      )
+    }
+  }
+```
+
+It looks good, right? What will happen if Formik wants to change the value of first name? e.g. automatically change the first name when users fill out other fields.
+
+Since the `FirstNameInput` component controls its value by itself, when users click copy first name, users won't see any changes on the first name field.
+
+There are a couple solutions
+
+* Add a key prop to the `FirstNameInput`, e.g. `<FirstNameInput key={props.values.copyFirstName} />`
+* (Recommend) Remove the state value from `FirstNameInput` component and make it a dump component
 
 ### 4. How to write tests?
