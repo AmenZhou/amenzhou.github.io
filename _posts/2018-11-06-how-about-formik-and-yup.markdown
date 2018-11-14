@@ -187,4 +187,24 @@ There are a couple solutions
 * Add a key prop to the `FirstNameInput`, e.g. `<FirstNameInput key={props.values.copyFirstName} />`
 * (Recommend) Remove the state value from `FirstNameInput` component and make it a dump component
 
-### 4. How to write tests?
+### 4. How to write async tests for Formik (in Mocka)?
+
+When you want to write tests around the function of submitting a Formik form or change input values inside a form, you need to force the test suites to wait for a few million seconds after triggering a event. We need async js tests in order to not block the main test process.
+
+```js
+  it('check the validations after submit', async () => {
+    submitTheForm();
+
+    await new Promise(resolve =>
+      // create a recusive function to do a loop with an exit condition
+      waitTill(() =>
+        if (!isEmpty(mountedForm.errors)) {
+          // check the validation errors appear
+          resolve();
+          return true;
+        }
+        return false;
+      )
+    )
+  })
+```
