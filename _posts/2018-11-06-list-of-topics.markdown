@@ -7,3 +7,4 @@ tags: [js_closure, es6]
 ---
 
 * What is my best practice of css in React?
+* vscode configurations for Ruby and Js
