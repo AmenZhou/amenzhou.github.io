@@ -192,19 +192,21 @@ There are a couple solutions
 When you want to write tests around the function of submitting a Formik form or change input values inside a form, you need to force the test suites to wait for a few million seconds after triggering a event. We need async js tests in order to not block the main test process.
 
 ```js
-  it('check the validations after submit', async () => {
+  it('shows an error when submit the form', async () => {
     submitTheForm();
 
-    await new Promise(resolve =>
+    const promise = new Promise(resolve =>
       // create a recusive function to do a loop with an exit condition
-      waitTill(() =>
+      const timerId = setInterval(() => {
         if (!isEmpty(mountedForm.errors)) {
           // check the validation errors appear
-          resolve();
-          return true;
+          resolve(timerId);
         }
-        return false;
-      )
+      }, 100)
     )
+
+    promise.then(timerId => clearInterval(timerId))
+
+    expect(mountedForm.text()).to.include('The first name is blank');
   })
 ```
