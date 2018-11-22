@@ -6,7 +6,7 @@ categories:
 tags: [react, es6]
 ---
 
-* Build a React form with Formik + Yup.
+### Build a React form with Formik + Yup.
 
 By using [Formik](https://github.com/jaredpalmer/formik), you can save time from building React forms from scratch. Formik gives us a boilplate with a bunch of APIs. [Yup](https://github.com/jquense/yup) is a form validation library. What's look like when we use them to build a form? What's kind of issues I have experienced?
 
