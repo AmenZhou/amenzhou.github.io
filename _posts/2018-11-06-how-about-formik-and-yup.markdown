@@ -78,7 +78,7 @@ class Form extends Component {
 
 ```
 
-### 2. Making Http Api calls inside Yup schema is not recommended
+### 2. Making Http Api calls inside Yup schema can be dangerous
 
 When you use Yup for form validation in Formik, you need to define a Yup schema and call the schema in the `validationSchema` function. There is a validation schema example on [this page](https://jaredpalmer.com/formik/docs/guides/validation)
 
@@ -100,7 +100,7 @@ const SignupSchema = Yup.object().shape({
 });
 ```
 
-The validation function will be triggered on an input change event / a blur event / a form submit event, based on your configuration. Everytime the validation function is called, it will execute validation on all fields on the form. That means even you only change first name, it will run validation on last name and email as well.
+The validation function will be triggered by a change event / a blur event / a form submit event, based on your configuration. Everytime the validation function is called, it will execute validation on all fields on the form. That means even you only change first name, it will run validation on last name and email as well.
 
 Think about this
 
