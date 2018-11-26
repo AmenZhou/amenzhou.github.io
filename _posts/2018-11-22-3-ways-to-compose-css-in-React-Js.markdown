@@ -10,7 +10,7 @@ tags: [css, reactjs]
 
 This is the same life prior to having Webpack, create CSS files in Rails assets pipe line and call class names or ids in the react component.
 
-`rails_path/app/assets/stylesheet/main.css`
+`app/assets/stylesheet/main.css`
 ```css
   .my-class {
     width: 100%;
@@ -19,7 +19,7 @@ This is the same life prior to having Webpack, create CSS files in Rails assets 
   }
 ```
 
-`rails_path/web/components/my-component.js`
+`web/components/my-component.js`
 ```js
   const MyComponent = props =>
     <div className="my-class">Hello World</div>
@@ -29,8 +29,8 @@ This is the same life prior to having Webpack, create CSS files in Rails assets 
 
 ### CSS-in-Js
 
-**Case 1**
-`rails_path/web/components/my-component.js`
+**Example 1**
+`web/components/my-component.js`
 ```js
   const MyComponent = props =>
     <div style="width: 100% margin: 2%, auto;">Hello World</div>
@@ -38,8 +38,10 @@ This is the same life prior to having Webpack, create CSS files in Rails assets 
   export default MyComponent;
 ```
 
-**Case 2: use typestyle**
-`rails_path/web/components/my-styles.js`
+**Example 2**
+Have a separate Js style file
+
+`web/components/my-styles.js`
 ```js
   import { style } from 'typestyle';
 
@@ -49,7 +51,7 @@ This is the same life prior to having Webpack, create CSS files in Rails assets 
   });
 ```
 
-`rails_path/web/components/my-component.js`
+`web/components/my-component.js`
 ```js
   import { helloWorld } from './my-styles';
 
@@ -60,3 +62,42 @@ This is the same life prior to having Webpack, create CSS files in Rails assets 
 ```
 
 ### CSS files with Webpack compilation
+
+`web/components/my-styles.css`
+
+```css
+  .myClass {
+    width: 100%;
+    margin: 2% auto;
+    ...
+  }
+```
+
+`web/components/my-component.js`
+```js
+  import style from './my-styles.css';
+
+  const MyComponent = props =>
+    <div className={style.myClass}>Hello World</div>
+
+  export default MyComponent;
+```
+
+`webpack.config.js`
+```js
+  module: {
+    plugins: [
+      // extract css file and export to rail pipe line
+      new ExtractTextPlugin('app/assets/stylesheets/main.css')
+    ],
+    rules: [
+      {
+        test: /\.css$/
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'postcss-loader']
+        })
+      }
+    ]
+  }
+```
