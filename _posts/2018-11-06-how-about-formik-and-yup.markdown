@@ -128,7 +128,7 @@ yup.addMethod(yup.string, 'checkDuplicatedEmail', => {
 });
 ```
 
-The api call will be fired while user is typing by key strokes. Consider to cache the api call or separate the email validation from this schema.
+The api call will be fired while user is typing by key strokes. **Consider to cache the api call or extract the email validation from this schema.**
 
 ### 3. Don't use self-controlled input components inside Formik
 
@@ -184,8 +184,9 @@ Since the `FirstNameInput` component controls its value by itself, when users cl
 
 There are a couple solutions
 
-* Add a key prop to the `FirstNameInput`, e.g. `<FirstNameInput key={props.values.copyFirstName} />`
-* (Recommend) Remove the state value from `FirstNameInput` component and make it a dump component
+* Add a prop `key` to the `FirstNameInput`, e.g. `<FirstNameInput key={props.values.copyFirstName} />`. The component will be remounted when the value of `key` changes.
+* Use react life cycle function `getDerivedStateFromprops` to update state by props.
+* **(Recommend) Remove the state value from `FirstNameInput` component and make it a dump component**
 
 ### 4. How to write async tests for Formik (in Mocka)?
 

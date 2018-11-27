@@ -1,5 +1,5 @@
 ---
-layout: post
+layot: post
 title:  "3 Ways to Compose CSS in React Js"
 date:   2018-11-22 17:30:00 -0500
 categories: css
@@ -62,6 +62,12 @@ Have a separate Js style file
 ```
 
 ### CSS files with Webpack compilation
+
+Personally I love this approach, because
+* By using `ExtractTextPlugin`, all css are able to be extracted out from Js files
+* Because of having independent css files, css files are able to be cached by CDN.
+* And we get credits from pages loading speed.
+* Not like having css files out of webpack, `postcss-loader` can be utilized.
 
 `web/components/my-styles.css`
 
