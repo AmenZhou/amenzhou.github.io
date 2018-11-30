@@ -10,6 +10,8 @@ tags: [css, reactjs]
 
 This is the same life prior to having Webpack, create CSS files in Rails assets pipe line and call class names or ids in the react component.
 
+The downside is that it is easy to pollute the global namespace.
+
 `app/assets/stylesheet/main.css`
 ```css
   .my-class {
@@ -28,6 +30,8 @@ This is the same life prior to having Webpack, create CSS files in Rails assets 
 ```
 
 ### CSS-in-Js
+
+The downside is that the css only can be parsed by browsers when the Js compilation is done.
 
 **Example 1**
 `web/components/my-component.js`
@@ -61,13 +65,13 @@ Have a separate Js style file
   export default MyComponent;
 ```
 
-### CSS files with Webpack compilation
+### CSS Module
 
 Personally I love this approach, because
 * By using `ExtractTextPlugin`, all css are able to be extracted out from Js files
-* Because of having independent css files, css files are able to be cached by CDN.
-* And we get credits from pages loading speed.
-* Not like having css files out of webpack, `postcss-loader` can be utilized.
+* CSS files can be parallel loading with Js files in the browsers page loading procedure
+* Browsers are able to draw the layout of pages before the Js execution
+* `postcss-loader` can be involed in webpack css compilation procedure(e.g Tailwind postcss, autoprefixer).
 
 `web/components/my-styles.css`
 
@@ -98,10 +102,21 @@ Personally I love this approach, because
     ],
     rules: [
       {
-        test: /\.css$/
+        test: /\.css|\.scss$/
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: ['css-loader', 'postcss-loader']
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                module: true
+                localIdentName: "[name]__[local]___[hash:base64:5]"
+              }
+            },
+            {
+               loader: 'postcss-loader'
+            }
+          ]
         })
       }
     ]
