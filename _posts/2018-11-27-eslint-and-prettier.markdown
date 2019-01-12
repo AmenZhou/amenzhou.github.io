@@ -7,7 +7,7 @@ tags: [eslint, prettier]
 comments: true
 ---
 
-# Integration of Eslint and Prettier (to be continued)
+### This post is not done yet
 
 ## Why do I need both `Eslint` and `Prettier`?
 

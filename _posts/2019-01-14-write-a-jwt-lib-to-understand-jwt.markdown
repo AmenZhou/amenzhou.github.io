@@ -7,7 +7,8 @@ tags: [jwt, ruby]
 comments: true
 ---
 
-# Write a JWT lib by myself to understand JWT (to be continued)
+### This post is not done yet
+
 ```ruby
 module SecureMessage
   class Encode
