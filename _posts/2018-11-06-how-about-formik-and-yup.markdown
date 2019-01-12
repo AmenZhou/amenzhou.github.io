@@ -4,6 +4,7 @@ title:  "My trip of using Formik + Yup"
 date:   2018-11-06 10:30:00 -0500
 categories:
 tags: [react, es6]
+comments: true
 ---
 
 ### Build a React form with Formik + Yup.

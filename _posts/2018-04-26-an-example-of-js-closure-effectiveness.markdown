@@ -4,6 +4,7 @@ title:  "A Show Case of Js Closure and Destructing Assignment"
 date:   2018-04-27 10:30:00 -0500
 categories: javascript
 tags: [js_closure, es6]
+comments: true
 ---
 
 As a Js beginner, it is quite hard to understand the effectiveness of Js closure. Today I am going to use an example to demo how we can leverage Js closure for object destructing in real life.

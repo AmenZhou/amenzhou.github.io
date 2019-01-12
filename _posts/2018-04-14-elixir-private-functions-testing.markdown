@@ -4,6 +4,7 @@ title:  "A Show Case of Elixir Unit Test Strategy"
 date:   2018-04-14 15:10:00 -0500
 categories: elixir
 tags: [test]
+comments: true
 ---
 
 In this post, I am not going to talk how many approaches we can use to test private function behavior, alternatively, I am going to go through an example and show my solution step by step.
