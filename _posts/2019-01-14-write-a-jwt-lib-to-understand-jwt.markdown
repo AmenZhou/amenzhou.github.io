@@ -33,6 +33,10 @@ module SecureMessage
     end
 
     # Generate the token
+    # The reason that Base64 is chosen here is
+    # firstly, it is able to encode the hash to a hex string
+    # secondly, it is decodable
+    # Since it is not encryption, the data is kind transparent to others.
     def generate
       Base64.encode64(payload.to_json)
     end
