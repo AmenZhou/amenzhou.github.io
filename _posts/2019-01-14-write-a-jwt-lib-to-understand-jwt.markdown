@@ -7,7 +7,7 @@ tags: [jwt, ruby]
 comments: true
 ---
 
-### This post is not done yet
+I wrote this class to explain the basic theory of JWT behind the scene, it may help you to understand the JWT better.
 
 ```ruby
 module SecureMessage
@@ -16,6 +16,10 @@ module SecureMessage
     # expired_at - must be a number of seconds since Epoch
     # key - to generate the signature
     # algorithem
+
+    # The list of algorithms here
+    # https://ruby-doc.org/stdlib-1.9.3/libdoc/openssl/rdoc/OpenSSL/Digest.html#class-OpenSSL::Digest-label-MD2
+    # you should to be noticed that some short length algorithems are not safe, like sha1 / MD5
     def initialize(
       data:,
       key: Rails.application.config.secret_token,
@@ -43,6 +47,9 @@ module SecureMessage
       }
     end
 
+    # Using HMAC to digest the signature seems to be proper
+    # HMAC - Hash-based Message Authentication, it is good for integrity of a message as well as the authenticity.
+    # Keep in mind that the signature is not decryptable.
     def signature
       # Have to use hexdigest over digest
       # otherwise, it will get a wrong signature after payload.to_json
@@ -55,7 +62,7 @@ module SecureMessage
   end
 
   class Decode
-    def initialize(key: Rails.application.config.secret_token, algorithm: 'sha256', token:)
+    def initialize(token:, key: Rails.application.config.secret_token, algorithm: 'sha256')
       @key = key
       @algorithm = algorithm
       @token = token
@@ -69,6 +76,9 @@ module SecureMessage
 
     private
 
+    # This is the key process of JWT
+    # In order to verify the integrity of the received data, it generates a new signature after receiving the data
+    # and then compare the new one with the received one
     def verify_signature
       signature_for_comparison == received_signature
     end

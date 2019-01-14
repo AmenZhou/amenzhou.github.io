@@ -15,8 +15,16 @@ comments: true
 
 ## How can I make them work together?
 
-First of all, you need to install these 3 packages
+### First of all, you need to install these 3 packages
 
 * eslint
 * prettier
-* [prettier-eslint](https://github.com/prettier/prettier-eslint)
+* [prettier-eslint-cli](https://github.com/prettier/prettier-eslint-cli)
+
+### Config `Eslint` and `Prettier` rules
+
+### Make it work
+
+`prettier-eslint` does the jobs of both `eslint --fix` and `prettier` and always regards `eslint` rules above `prettier` if there are conflicts rules present.
+
+A simple command to kickoff the formatting `prettier-eslint [path/to/files]`
