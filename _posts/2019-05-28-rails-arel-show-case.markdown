@@ -98,3 +98,46 @@ users_with_flags.first.new_post #=> 1
 users_with_flags.second.new_post #=> nil
 ```
 
+# How to integrate Arel to ActiveRecord
+
+One downside of  "find_by_sql" is that it only returns an Array, but in a lot of use cases, we expect an "ActiveRecord::Association" out from a query so that it can be merged with other Rails scopes.
+
+Arel can be filled into "ActiveRecord::Association", here are some tips
+
+Join - Arel "join" can fit into AR "joins" clause
+Where - Arel nodes can fit into AR "where" clause
+
+### Use the previous example
+
+```ruby
+user = User.arel_table
+post = Post.arel_table
+
+# Arel subquery
+sub_query = user
+  .join(post, Arel::Nodes::OuterJoin)
+  .on(
+    post[:user_id].eq(user[:user_id])
+  )
+  .where(
+    post[:created_at].gt(Time.current - 24.hours)
+  )
+sub_query.project(user[:user_id], '1 as new_post')
+sub_query.as('user2')
+
+# Arel outer Join
+outer_join = user
+  .join(sub_query)
+  .on(
+    user[:user_id].eq(user2[:user_id])
+  )
+
+# Use Arel outer_join in ActiveRecord main query
+User.join(
+  outer_join.join_sources
+).select(
+  'users.user_id, user2.new_post'
+).merge(
+  some_other_user_scope
+).uniq
+```
