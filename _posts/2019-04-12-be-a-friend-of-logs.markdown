@@ -7,7 +7,6 @@ tags: [ruby]
 comments: true
 ---
 
-# Overview
 Good utilization of logging can make developers' lives better.
 
 Because logs are good sources of
@@ -17,19 +16,10 @@ Because logs are good sources of
 * Providing data for product improvements
 * etc
 
-*Sumologic is a great tool for log inquiry.*
+*Sumologic is a great tool for log inquiry.* Learn more at [Sumologic](https://www.sumologic.com/)
 
 I am going to give a brief introduction to using Sumologic at the end of this essay.
 
-# Airbrake or Rails logger?
-
-**When should we use Airbrake?**
-For those system exceptions or errors which can cause dysfunction on a feature and need our attention immediately. Like fatal errors.
-
-**When should we use Rails logger?**
-For that less important stuff.
-
-# Get started
 # Step 1 - Compose Stories
 The first thing is trying to compose some stories which can help you understand what you need from the logs.
 
