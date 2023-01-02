@@ -3,7 +3,7 @@ layot: post
 title:  "Basic Software Design Principles"
 date:   2022-12-31 13:00:00 -0500
 categories:
-tags: [software]
+tags: [software, design principles]
 comments: true
 ---
 
